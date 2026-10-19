@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f5f3ed" />
+    <meta name="theme-color" content="#eef1f8" />
+    <title>TileMe — Your windows, in one scrolling row.</title>
     <meta
       name="description"
-      content="TileMe is a free, open-source scrolling window manager for macOS. Keep windows side by side, navigate with your keyboard or trackpad, and give each window room."
+      content="TileMe is a free, open-source macOS scrolling window manager. Explore an interactive desktop map, then download the Apple Silicon preview for macOS 13+."
     />
     <meta
       property="og:title"
@@ -14,7 +15,7 @@
     />
     <meta
       property="og:description"
-      content="A free, open-source scrolling window manager for Apple Silicon Macs. Download the v0.6.0 preview for macOS 13+."
+      content="A different way to move around your Mac. Free, open source, and built around one scrolling row."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -25,469 +26,439 @@
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="TileMe: Your windows, in one scrolling row. Three illustrated windows sit side by side."
+      content="TileMe desktop map: colorful window blocks arranged in a continuous row."
     />
-    <link rel="canonical" href="https://tileme-mac.foamyeel16.chatgpt.site/" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+    <link rel="canonical" href="https://tileme-mac.foamyeel16.chatgpt.site/" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="assets/sora-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="styles.css" />
-    <title>TileMe — Your windows, in one scrolling row.</title>
     <script src="app.js" defer></script>
   </head>
   <body>
-    <svg
-      class="icon-definitions"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
+    <svg class="symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <symbol id="i-download" viewBox="0 0 24 24">
-          <path d="M12 3v12m-4-4 4 4 4-4M5 16v4h14v-4" />
+        <symbol id="arrow" viewBox="0 0 24 24">
+          <path d="M4 12h15m-6-6 6 6-6 6" />
         </symbol>
-        <symbol id="i-github" viewBox="0 0 24 24">
-          <path
-            d="M9 19c-4 1-4-2-6-2m13 5v-4c0-1-.3-1.7-1-2 3-.4 6-1.5 6-6a5 5 0 0 0-1.4-3.5A5 5 0 0 0 19.5 3S18.2 2.6 16 4a13 13 0 0 0-8 0C5.8 2.6 4.5 3 4.5 3a5 5 0 0 0-.1 3.5A5 5 0 0 0 3 10c0 4.5 3 5.6 6 6-.7.3-1 1-1 2v4"
-          />
+        <symbol id="download" viewBox="0 0 24 24">
+          <path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4" />
         </symbol>
-        <symbol id="i-arrow" viewBox="0 0 24 24">
-          <path d="m10 5 7 7-7 7M17 12H3" />
+        <symbol id="plus" viewBox="0 0 24 24">
+          <path d="M12 4v16M4 12h16" />
         </symbol>
-        <symbol id="i-plus" viewBox="0 0 24 24">
-          <path d="M12 5v14M5 12h14" />
+        <symbol id="width" viewBox="0 0 24 24">
+          <path d="M3 4v16M21 4v16M7 12h10m-7-3-3 3 3 3m4-6 3 3-3 3" />
         </symbol>
-        <symbol id="i-windows" viewBox="0 0 24 24">
-          <rect x="3" y="6" width="7" height="13" rx="1.5" />
-          <rect x="13" y="4" width="8" height="15" rx="1.5" />
-        </symbol>
-        <symbol id="i-trackpad" viewBox="0 0 24 24">
-          <rect x="3" y="4" width="18" height="16" rx="3" />
-          <path d="M7 12h10m-8-3-3 3 3 3m6-6 3 3-3 3" />
-        </symbol>
-        <symbol id="i-keyboard" viewBox="0 0 24 24">
-          <rect x="2" y="5" width="20" height="14" rx="3" />
-          <path
-            d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M7 15h10"
-          />
-        </symbol>
-        <symbol id="i-width" viewBox="0 0 24 24">
-          <path d="M4 4v16M20 4v16M7 12h10m-7-3-3 3 3 3m4-6 3 3-3 3" />
-        </symbol>
-        <symbol id="i-restore" viewBox="0 0 24 24">
-          <path d="M4 10a8 8 0 1 1 1 7M4 4v6h6M12 7v5l3 2" />
+        <symbol id="restore" viewBox="0 0 24 24">
+          <path d="M4 10a8 8 0 1 1 1 7M4 4v6h6" />
         </symbol>
       </defs>
     </svg>
-
-    <a href="#main" class="skip-link">Skip to content</a>
-    <header class="site-header wrap">
-      <a class="brand" href="#" aria-label="TileMe home"
-        ><img src="assets/icon.svg" width="44" height="34" alt="" /><span
-          >TileMe</span
-        ></a
-      >
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header container">
+      <a class="wordmark" href="#" aria-label="TileMe home"
+        >TileMe<span class="brand-dot" aria-hidden="true"></span
+      ></a>
+      <p>A small utility.<br />A different desktop.</p>
       <nav aria-label="Main navigation">
-        <a href="#how-it-works">Try it out</a><a href="#shortcuts">Shortcuts</a
-        ><a href="#install">Installation</a>
+        <a href="#explore">Explore</a><a href="#install">Get started</a
+        ><a href="https://github.com/sujalalmeida/TileMac"
+          >GitHub <span aria-hidden="true">↗</span></a
+        >
       </nav>
-      <a
-        class="source-link"
-        aria-label="View TileMe on GitHub"
-        href="https://github.com/sujalalmeida/TileMac"
-        ><svg class="icon"><use href="#i-github" /></svg><span>Source code</span
-        ><span aria-hidden="true">↗</span></a
-      >
     </header>
     <main id="main">
-      <div class="intro-grid wrap">
-        <section class="hero" aria-labelledby="hero-title">
-          <div class="hero-kicker">
-            <span class="orange-dot"></span
-            ><span>An independent Mac utility</span>
-          </div>
-          <h1 id="hero-title">Your windows,<br />in one<br />scrolling row.</h1>
-          <p class="hero-description">
+      <section class="hero container" aria-labelledby="title">
+        <div class="hero-copy">
+          <p class="product-type">A scrolling window manager for macOS</p>
+          <h1 id="title">Your windows,<br />in one scrolling row.</h1>
+          <p class="description">
             Keep your windows side by side. Open something new, give it a place,
             and move along the row.
           </p>
-          <div class="hero-actions">
+        </div>
+        <aside class="download-block" aria-label="Download TileMe preview">
+          <a
+            class="download-button"
+            href="https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg"
+            download
+            ><span class="download-circle"
+              ><svg class="icon"><use href="#download" /></svg></span
+            ><span
+              >Download<br />for Mac <span aria-hidden="true">↗</span></span
+            ></a
+          >
+          <p>
             <a
-              class="button button-primary"
-              href="https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg"
-              download
-              >Download for Mac<svg class="icon">
-                <use href="#i-download" /></svg></a
-            ><a class="text-link" href="https://github.com/sujalalmeida/TileMac"
-              >View source <span aria-hidden="true">↗</span></a
+              href="https://github.com/sujalalmeida/TileMac/releases/tag/v0.6.0"
+              >v0.6.0 preview</a
             >
-          </div>
-          <p class="compatibility">
-            Free · Open source · Apple Silicon · macOS 13+
+            <span>Free · Open source</span>
+            <span>Apple Silicon · macOS 13+</span>
           </p>
-          <a class="preview-note" href="#preview-note"
-            >v0.6.0 preview <span aria-hidden="true">/</span> Read the
-            first-launch note <span aria-hidden="true">↗</span></a
+          <a class="source-link" href="https://github.com/sujalalmeida/TileMac"
+            >View source <span aria-hidden="true">↗</span></a
+          ><a class="first-launch-link" href="#preview-note"
+            >Read the first-launch note</a
           >
-        </section>
-        <section
-          class="demo-section"
-          id="how-it-works"
-          aria-labelledby="demo-title"
-        >
-          <div class="demo-heading">
-            <h2 id="demo-title">A desktop that goes somewhere.</h2>
-            <span class="demo-label">Interactive demonstration</span>
+        </aside>
+      </section>
+      <section
+        class="explorer container"
+        id="explore"
+        aria-labelledby="explorer-title"
+      >
+        <div class="explorer-heading">
+          <div>
+            <span class="demo-tag">Interactive model</span>
+            <h2 id="explorer-title">Think outside the screen.</h2>
           </div>
-          <div
-            class="demo-shell"
-            id="demo"
-            role="region"
-            aria-label="Scrolling window demonstration"
-            aria-describedby="demo-help"
-            tabindex="0"
-          >
-            <div class="desktop-menubar" aria-hidden="true">
-              <span class="desktop-brand"
-                ><svg class="icon"><use href="#i-windows" /></svg
-                >Workspace</span
-              ><span class="menu-right"
-                ><span class="running-dot"></span> Scrolling row</span
-              >
+          <p>
+            A row can be wider than your display.<br />Build one here and see
+            what happens.
+          </p>
+        </div>
+        <div
+          class="workspace"
+          id="demo"
+          role="region"
+          aria-label="Interactive desktop map"
+          aria-describedby="demo-help"
+          tabindex="0"
+        >
+          <div class="workspace-bar">
+            <span class="workspace-name"
+              ><span class="state-dot" aria-hidden="true"></span
+              ><span id="mode-label">Row running</span></span
+            ><span>Illustrative windows · browser demonstration</span>
+          </div>
+          <div class="map-stage">
+            <div class="coordinate-line" aria-hidden="true">
+              <span>↤</span
+              ><span id="stage-caption">One row. Room beyond the edge.</span
+              ><span>↦</span>
+            </div>
+            <div class="display-frame" aria-hidden="true">
+              <span>Your visible desktop</span><i></i><i></i><i></i><i></i>
             </div>
             <div
-              class="window-viewport"
-              id="window-viewport"
+              class="map-viewport"
+              id="map-viewport"
               tabindex="0"
-              aria-label="Example windows; use Left and Right arrow keys"
+              aria-label="Desktop map; use Left and Right arrows to select a window"
             >
-              <div class="window-row" id="window-row"></div>
+              <div class="map-track" id="map-track"></div>
             </div>
-            <div class="desktop-bottom">
-              <span class="window-count" id="window-count">4 windows</span>
-              <div
-                class="row-map"
-                id="row-map"
-                role="group"
-                aria-label="Select a demonstration window"
-              ></div>
-              <span class="row-direction" aria-hidden="true">← &nbsp; →</span>
-            </div>
+            <span class="map-origin" aria-hidden="true"
+              >Workspace / conceptual view</span
+            >
           </div>
-          <div class="demo-controls">
-            <div class="demo-buttons">
+          <div class="map-overview">
+            <div class="overview-title">
+              <span>The whole row</span><span id="window-count">4 windows</span>
+            </div>
+            <div
+              class="overview-bars"
+              id="overview-bars"
+              aria-hidden="true"
+            ></div>
+            <label class="navigator-label" for="navigator"
+              >Move to a window</label
+            ><input
+              id="navigator"
+              type="range"
+              min="0"
+              max="3"
+              value="1"
+              aria-label="Move to a window"
+              disabled
+            />
+          </div>
+          <div class="map-toolbar">
+            <div class="navigation-buttons">
               <button
-                class="button arrow-button"
+                class="control arrow-control"
                 id="previous"
                 aria-label="Previous window"
+                disabled
               >
-                <svg class="icon flip"><use href="#i-arrow" /></svg></button
+                <svg class="icon flip"><use href="#arrow" /></svg></button
               ><button
-                class="button arrow-button"
+                class="control arrow-control"
                 id="next"
                 aria-label="Next window"
+                disabled
               >
-                <svg class="icon"><use href="#i-arrow" /></svg></button
-              ><button class="button add-button" id="add-window">
-                <svg class="icon"><use href="#i-plus" /></svg>Add window
+                <svg class="icon"><use href="#arrow" /></svg>
               </button>
             </div>
-            <p id="demo-help">Swipe, or focus the demo<br />and use ← / →.</p>
+            <button class="control" id="add-window" disabled>
+              <svg class="icon"><use href="#plus" /></svg>Add window</button
+            ><button class="control" id="change-width" disabled>
+              <svg class="icon"><use href="#width" /></svg>Change width</button
+            ><button class="control restore-control" id="toggle-row" disabled>
+              <svg class="icon"><use href="#restore" /></svg
+              ><span>Stop &amp; restore</span></button
+            ><button class="reset-button" id="reset-demo" disabled>
+              Reset demo
+            </button>
           </div>
+        </div>
+        <div class="demo-bottom">
           <p
-            class="demo-status"
             id="demo-status"
             role="status"
             aria-live="polite"
             aria-atomic="true"
           >
-            Code selected. Window 2 of 4. New windows join after your selection.
+            Select a window to explore the row.
           </p>
-          <p class="demo-caption">
-            Different widths. One continuous row.<br />The windows keep their
-            space as you move.
+          <p id="demo-help">
+            Select a block, drag the overview slider, or use ← / → with the map
+            focused. Swipe to move on touch screens. This model stays in your
+            browser.
           </p>
-          <noscript
-            ><p class="no-script">
-              Enable JavaScript to try the interactive window demonstration. The
-              download and all installation instructions work without it.
-            </p></noscript
+        </div>
+        <noscript
+          ><p class="no-script">
+            Enable JavaScript to explore the desktop map. The download and
+            installation instructions work without it.
+          </p></noscript
+        >
+      </section>
+      <section class="behavior container" aria-labelledby="behavior-title">
+        <div class="behavior-intro">
+          <h2 id="behavior-title">A few rules.<br />A different rhythm.</h2>
+          <p>The row takes care of placement.<br />You choose where to go.</p>
+          <a href="#explore" class="inline-link"
+            >Try it in the model <span aria-hidden="true">↑</span></a
           >
-        </section>
-      </div>
-      <section class="workflow wrap" aria-label="The scrolling workflow">
-        <div>
-          <span class="workflow-index">01</span>
-          <p>
-            <strong>Open something.</strong
-            ><span>It joins after your selected window.</span>
-          </p>
         </div>
-        <span class="workflow-arrow" aria-hidden="true">→</span>
-        <div>
-          <span class="workflow-index">02</span>
-          <p>
-            <strong>Move along.</strong
-            ><span>Use your keys or your trackpad.</span>
-          </p>
-        </div>
-        <span class="workflow-arrow" aria-hidden="true">→</span>
-        <div>
-          <span class="workflow-index">03</span>
-          <p>
-            <strong>Call it a day.</strong
-            ><span>Stop the row. Restore your layout.</span>
-          </p>
-        </div>
-      </section>
-      <section
-        class="features wrap section-space"
-        aria-labelledby="features-title"
-      >
-        <div class="section-intro">
-          <p class="section-label">The way it works</p>
-          <h2 id="features-title">A row, with<br />room to work.</h2>
-          <p>
-            TileMe handles placement.<br />You decide what belongs beside you.
-          </p>
-        </div>
-        <div class="feature-list">
-          <article class="feature">
-            <svg class="icon"><use href="#i-windows" /></svg>
-            <div>
-              <h3>New windows find their place.</h3>
-              <p>
-                Open an app and its window joins after the selected one.
-                Existing windows keep their widths.
-              </p>
-            </div>
-          </article>
-          <article class="feature">
-            <svg class="icon"><use href="#i-trackpad" /></svg>
-            <div>
-              <h3>Scroll as far as you need.</h3>
-              <p>
-                Hold Control + Option and scroll horizontally on your trackpad
-                to move continuously along the row.
-              </p>
-            </div>
-          </article>
-          <article class="feature">
-            <svg class="icon"><use href="#i-keyboard" /></svg>
-            <div>
-              <h3>Move without reaching for the mouse.</h3>
-              <p>
-                Go to the previous or next window with your keyboard. The row
-                follows your selection.
-              </p>
-            </div>
-          </article>
-          <article class="feature">
-            <svg class="icon"><use href="#i-width" /></svg>
-            <div>
-              <h3>Give each window its own width.</h3>
-              <p>
-                Cycle the selected window’s width independently. A wide editor
-                can sit beside a narrow set of notes.
-              </p>
-            </div>
-          </article>
-          <article class="feature">
-            <svg class="icon"><use href="#i-restore" /></svg>
-            <div>
-              <h3>Put things back when you’re done.</h3>
-              <p>
-                Stop the row or quit TileMe normally to restore windows to their
-                original positions.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-      <section
-        class="shortcuts-section section-space"
-        id="shortcuts"
-        aria-labelledby="shortcuts-title"
-      >
-        <div class="shortcuts-inner wrap">
-          <div class="shortcut-intro">
-            <p class="section-label">Keep these close</p>
-            <h2 id="shortcuts-title">The controls.<br />All four of them.</h2>
-            <p>Control + Option is your starting point.</p>
-            <div class="big-keys" aria-hidden="true">
-              <span>⌃<small>control</small></span
-              ><span>⌥<small>option</small></span>
-            </div>
-          </div>
-          <dl class="shortcut-list">
-            <div>
-              <dt>Previous / next window</dt>
-              <dd aria-label="Control plus Option plus Left or Right arrow">
-                <kbd>⌃</kbd><kbd>⌥</kbd><kbd>←</kbd><span>/</span><kbd>→</kbd>
-              </dd>
-            </div>
-            <div>
-              <dt>Cycle window width</dt>
-              <dd aria-label="Control plus Option plus R">
-                <kbd>⌃</kbd><kbd>⌥</kbd><kbd>R</kbd>
-              </dd>
-            </div>
-            <div>
-              <dt>Start / stop and restore</dt>
-              <dd aria-label="Control plus Option plus P">
-                <kbd>⌃</kbd><kbd>⌥</kbd><kbd>P</kbd>
-              </dd>
-            </div>
-            <div>
-              <dt>Scroll the row</dt>
-              <dd
-                aria-label="Control plus Option plus horizontal trackpad scroll"
-              >
-                <kbd>⌃</kbd><kbd>⌥</kbd
-                ><span class="scroll-key">↔ <span>trackpad</span></span>
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-      <section
-        class="install-section wrap section-space"
-        id="install"
-        aria-labelledby="install-title"
-      >
-        <div class="install-heading">
+        <dl class="behavior-list">
           <div>
-            <p class="section-label">From download to desktop</p>
-            <h2 id="install-title">Make yourself at home.</h2>
+            <dt>Everything has a place.</dt>
+            <dd>
+              New windows appear after the selected window. Existing windows
+              keep their widths.
+            </dd>
           </div>
-          <a
-            class="text-link"
-            href="https://github.com/sujalalmeida/TileMac/releases/tag/v0.6.0"
-            >v0.6.0 preview release notes <span aria-hidden="true">↗</span></a
-          >
-        </div>
-        <ol class="install-steps">
-          <li>
-            <h3>Get the app.</h3>
-            <p>
+          <div>
+            <dt>Movement is continuous.</dt>
+            <dd>
+              Hold Control + Option and scroll horizontally on your trackpad to
+              move along the row.
+            </dd>
+          </div>
+          <div>
+            <dt>Your keyboard can take you there.</dt>
+            <dd>
+              Navigate to the previous or next window without reaching for the
+              mouse.
+            </dd>
+          </div>
+          <div>
+            <dt>Widths belong to individual windows.</dt>
+            <dd>
+              Cycle one window’s width. The windows beside it keep theirs.
+            </dd>
+          </div>
+          <div>
+            <dt>The original layout is remembered.</dt>
+            <dd>
+              Stop or quit TileMe normally to restore the windows to their
+              original positions.
+            </dd>
+          </div>
+        </dl>
+      </section>
+      <section class="setup" id="install" aria-labelledby="install-title">
+        <div class="setup-inner container">
+          <div class="setup-heading">
+            <p>From here to your Mac</p>
+            <h2 id="install-title">Your first row starts here.</h2>
+            <span>Free. No account. An independent open-source project.</span>
+          </div>
+          <div class="setup-columns">
+            <div class="installation">
+              <h3>Install the preview</h3>
+              <ol>
+                <li>
+                  <div>
+                    <h4>Download and open the DMG.</h4>
+                    <p>
+                      <a
+                        href="https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg"
+                        download
+                        >Get TileMe 0.6.0</a
+                      >
+                      for Apple Silicon.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Move TileMe into Applications.</h4>
+                    <p>
+                      Drag the app into Applications and eject the disk image.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Open the installed app.</h4>
+                    <p>
+                      Launch TileMe from Applications. If macOS blocks it,
+                      follow the first-launch note below.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Grant Accessibility access.</h4>
+                    <p>
+                      In System Settings → Privacy &amp; Security →
+                      Accessibility, enable TileMe so it can arrange your
+                      windows.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <div>
+                    <h4>Press Control + Option + P.</h4>
+                    <p>
+                      Start the row. Press the same shortcut to stop and
+                      restore.
+                    </p>
+                  </div>
+                </li>
+              </ol>
+              <aside class="launch-note" id="preview-note">
+                <h4>About this preview</h4>
+                <p>
+                  This preview is not notarized by Apple. macOS may require
+                  approval through System Settings → Privacy &amp; Security →
+                  Open Anyway.
+                </p>
+                <a class="inline-link" href="https://support.apple.com/102445"
+                  >Apple’s Open Anyway instructions
+                  <span aria-hidden="true">↗</span></a
+                >
+              </aside>
+            </div>
+            <div class="shortcut-reference" id="shortcuts">
+              <h3>A reference for your fingers.</h3>
+              <p>Hold <strong>Control + Option</strong>, then:</p>
+              <dl class="shortcut-list">
+                <div>
+                  <dt>Previous / next window</dt>
+                  <dd aria-label="Control plus Option plus Left or Right arrow">
+                    <kbd>←</kbd><span>or</span><kbd>→</kbd>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Cycle window width</dt>
+                  <dd aria-label="Control plus Option plus R"><kbd>R</kbd></dd>
+                </div>
+                <div>
+                  <dt>Start / stop and restore</dt>
+                  <dd aria-label="Control plus Option plus P"><kbd>P</kbd></dd>
+                </div>
+                <div>
+                  <dt>Scroll the row</dt>
+                  <dd
+                    aria-label="Control plus Option plus horizontal trackpad scroll"
+                  >
+                    <span class="trackpad-symbol" aria-hidden="true">↔</span
+                    ><span>horizontal<br />trackpad scroll</span>
+                  </dd>
+                </div>
+              </dl>
+              <div class="shortcut-footnote">
+                <span aria-hidden="true">⌃ ⌥</span>
+                <p>One modifier pair.<br />Four ways to move things along.</p>
+              </div>
               <a
-                href="https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg"
-                download
-                >Download TileMe 0.6.0</a
+                class="inline-link"
+                href="https://github.com/sujalalmeida/TileMac/releases/tag/v0.6.0"
+                >Read the release notes <span aria-hidden="true">↗</span></a
               >
-              and open the DMG.
-            </p>
-          </li>
-          <li>
-            <h3>Move it in.</h3>
-            <p>Drag TileMe into Applications, then eject the disk image.</p>
-          </li>
-          <li>
-            <h3>Open TileMe.</h3>
-            <p>
-              Launch the installed app from Applications. See the first-launch
-              note below if macOS blocks it.
-            </p>
-          </li>
-          <li>
-            <h3>Give it access.</h3>
-            <p>
-              Enable TileMe in System Settings → Privacy &amp; Security →
-              Accessibility.
-            </p>
-          </li>
-          <li>
-            <h3>Start your row.</h3>
-            <p>
-              Press <strong>Control + Option + P</strong>. Press it again to
-              stop and restore.
-            </p>
-          </li>
-        </ol>
-        <aside class="preview-card" id="preview-note">
-          <div class="preview-title">
-            <span class="notice-icon" aria-hidden="true">!</span>
-            <h3>A note on<br />first launch.</h3>
+            </div>
           </div>
-          <div>
-            <p>
-              This preview is not notarized by Apple. macOS may require approval
-              through System Settings → Privacy &amp; Security → Open Anyway.
-            </p>
-            <p>Only approve the app if you trust the download.</p>
-            <a class="text-link" href="https://support.apple.com/102445"
-              >Apple’s Open Anyway instructions
-              <span aria-hidden="true">↗</span></a
-            >
-          </div>
-        </aside>
+        </div>
       </section>
-      <section
-        class="practical wrap section-space"
-        aria-labelledby="practical-title"
-      >
-        <div class="practical-heading">
-          <p class="section-label">Current boundaries</p>
-          <h2 id="practical-title">A preview.<br />A few practical details.</h2>
-          <p>Here’s what to know before you install.</p>
-        </div>
-        <ul>
-          <li>
-            <strong>Apple Silicon only.</strong
-            ><span>Requires macOS 13 or later.</span>
-          </li>
-          <li>
-            <strong>One display. One current Space.</strong
-            ><span
-              >Switching Spaces stops the row and attempts restoration.</span
-            >
-          </li>
-          <li>
-            <strong>Apps still have their own rules.</strong
-            ><span>Some apps impose window-size or position restrictions.</span>
-          </li>
-          <li>
-            <strong>Quit normally to put things back.</strong
-            ><span>Force-quitting cannot restore window positions.</span>
-          </li>
-          <li>
-            <strong
-              >Fresh-install compatibility testing is still pending.</strong
-            ><span>This is an early preview release.</span>
-          </li>
-        </ul>
+      <section class="practical container" aria-label="Current limitations">
+        <details open>
+          <summary>
+            <span>Before you install</span
+            ><span class="summary-description"
+              >The practical details of an early preview.</span
+            ><span class="expand-sign" aria-hidden="true"></span>
+          </summary>
+          <ul>
+            <li>
+              <strong>Apple Silicon only.</strong>
+              <p>Requires macOS 13 or later.</p>
+            </li>
+            <li>
+              <strong>One display, current Space.</strong>
+              <p>
+                Each session uses one display and the current Space. Switching
+                Spaces stops the row and attempts restoration.
+              </p>
+            </li>
+            <li>
+              <strong>App restrictions still apply.</strong>
+              <p>Some apps impose window-size or position restrictions.</p>
+            </li>
+            <li>
+              <strong>Normal quits can restore.</strong>
+              <p>Force-quitting cannot restore window positions.</p>
+            </li>
+            <li>
+              <strong
+                >Fresh-install compatibility testing is still pending.</strong
+              >
+              <p>This is a preview release.</p>
+            </li>
+          </ul>
+        </details>
       </section>
-      <section class="closing wrap" aria-labelledby="closing-title">
-        <div>
-          <p class="section-label">Free, and open to you</p>
-          <h2 id="closing-title">Take the row for a scroll.</h2>
-          <p>TileMe is an independent open-source project.</p>
-        </div>
-        <div class="closing-action">
-          <a
-            class="button button-primary"
-            href="https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg"
-            download
-            >Download for Mac<svg class="icon">
-              <use href="#i-download" /></svg></a
-          ><span>v0.6.0 preview · Apple Silicon · macOS 13+</span>
-        </div>
+      <section class="last-call container" aria-label="Download TileMe">
+        <p>A scrolling row for your Mac.<br />Free to use. Open to explore.</p>
+        <a
+          class="button-primary"
+          href="https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg"
+          download
+          >Download for Mac <svg class="icon"><use href="#download" /></svg
+        ></a>
       </section>
     </main>
-    <footer class="site-footer wrap">
-      <a class="brand" href="#" aria-label="TileMe home"
-        ><img src="assets/icon.svg" width="36" height="28" alt="" /><span
-          >TileMe</span
-        ></a
+    <footer class="footer container">
+      <div class="footer-top">
+        <span>Independent by design. Open source by choice.</span>
+        <nav aria-label="Footer navigation">
+          <a href="https://github.com/sujalalmeida/TileMac">GitHub ↗</a
+          ><a href="https://github.com/sujalalmeida/TileMac/releases/tag/v0.6.0"
+            >Release notes ↗</a
+          ><a href="https://github.com/sujalalmeida/TileMac/blob/master/LICENSE"
+            >MIT license ↗</a
+          >
+        </nav>
+      </div>
+      <a class="footer-wordmark" href="#" aria-label="TileMe home"
+        >TileMe<span aria-hidden="true">↗</span></a
       >
-      <p>More room for what’s open.</p>
-      <nav aria-label="Footer navigation">
-        <a href="https://github.com/sujalalmeida/TileMac"
-          >GitHub <span aria-hidden="true">↗</span></a
-        ><a href="https://github.com/sujalalmeida/TileMac/releases/tag/v0.6.0"
-          >Release notes</a
-        ><a href="https://github.com/sujalalmeida/TileMac/blob/master/LICENSE"
-          >MIT license</a
-        >
-      </nav>
+      <div class="footer-bottom">
+        <span>Made for the way windows move.</span
+        ><span>macOS 13+ / Apple Silicon / v0.6.0 preview</span>
+      </div>
     </footer>
   </body>
 </html>

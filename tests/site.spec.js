@@ -7,131 +7,137 @@ test.beforeEach(async ({ page }) => {
     throw error;
   });
   await page.goto("/");
-  await expect(page.locator(".app-window")).toHaveCount(4);
+  await expect(page.locator(".map-tile")).toHaveCount(4);
 });
-
-test("insertion follows selection without changing existing widths", async ({
-  page,
-}) => {
-  const initial = await page.locator(".app-window").evaluateAll((els) =>
-    els.map((el) => ({
-      id: el.dataset.id,
-      width: el.getBoundingClientRect().width,
-    })),
-  );
-  await page.getByRole("button", { name: "Add window", exact: true }).click();
-  await expect(page.locator(".app-window")).toHaveCount(5);
-  await expect(page.locator(".app-window").nth(2)).toHaveAttribute(
-    "data-selected",
-    "true",
-  );
-  await expect(page.locator(".app-window").nth(2)).toHaveAttribute(
-    "data-id",
-    "5",
-  );
-  const remaining = await page
-    .locator('.app-window:not([data-id="5"])')
+const selected = (page) => page.locator('.map-tile[aria-pressed="true"]');
+const region = (page) =>
+  page.getByRole("region", { name: "Interactive desktop map", exact: true });
+const widths = (page) =>
+  page
+    .locator(".map-tile")
     .evaluateAll((els) =>
       els.map((el) => ({
         id: el.dataset.id,
         width: el.getBoundingClientRect().width,
       })),
     );
-  expect(remaining).toEqual(initial);
+
+test("new block joins after selection without squeezing other blocks", async ({
+  page,
+}) => {
+  const before = await widths(page);
+  await page.getByRole("button", { name: "Add window", exact: true }).click();
+  await expect(page.locator(".map-tile")).toHaveCount(5);
+  await expect(page.locator(".map-tile").nth(2)).toHaveAttribute(
+    "data-id",
+    "5",
+  );
+  await expect(selected(page)).toHaveAttribute("data-id", "5");
+  const after = (await widths(page)).filter((w) => w.id !== "5");
+  expect(after).toEqual(before);
   await expect(page.getByRole("status")).toContainText(
     "Existing windows kept their widths",
   );
-  const overflow = await page
-    .locator("#window-viewport")
-    .evaluate((el) => el.scrollWidth > el.clientWidth);
-  expect(overflow).toBe(true);
-  await page
-    .getByRole("button", { name: "Select Music, window 5", exact: true })
-    .click();
-  await expect(page.locator(".app-window").last()).toHaveAttribute(
-    "data-selected",
-    "true",
-  );
-  await expect(
-    page.getByRole("button", { name: "Next window", exact: true }),
-  ).toBeDisabled();
+  expect(
+    await page
+      .locator("#map-viewport")
+      .evaluate((v) => v.scrollWidth > v.clientWidth),
+  ).toBe(true);
 });
 
-test("arrow controls, scoped keyboard handling, boundaries and focus", async ({
-  page,
-}) => {
-  const region = page.getByRole("region", {
-    name: "Scrolling window demonstration",
-  });
+test("keyboard scope, boundaries, and roving block focus", async ({ page }) => {
   await page.keyboard.press("ArrowRight");
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "2",
-  );
-  await region.focus();
+  await expect(selected(page)).toHaveAttribute("data-id", "2");
+  await region(page).focus();
   await page.keyboard.press("ArrowRight");
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "3",
-  );
-  await expect(region).toBeFocused();
+  await expect(selected(page)).toHaveAttribute("data-id", "3");
+  await expect(region(page)).toBeFocused();
   await page.keyboard.press("Home");
   await expect(
     page.getByRole("button", { name: "Previous window", exact: true }),
   ).toBeDisabled();
-  await page.keyboard.press("ArrowLeft");
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "1",
-  );
   await page.keyboard.press("End");
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "4",
-  );
-  await page
-    .getByRole("button", { name: "Previous window", exact: true })
-    .click();
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "3",
-  );
-  await region.focus();
-  await page.keyboard.press("Tab");
-  await expect(page.locator("#window-viewport")).toBeFocused();
+  await expect(selected(page)).toHaveAttribute("data-id", "4");
+  await expect(
+    page.getByRole("button", { name: "Next window", exact: true }),
+  ).toBeDisabled();
+  await selected(page).focus();
+  await page.keyboard.press("ArrowLeft");
+  await expect(selected(page)).toHaveAttribute("data-id", "3");
+  await expect(selected(page)).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    page.getByRole("button", { name: "Select Notes, window 1", exact: true }),
+    page.getByRole("slider", { name: "Move to a window" }),
   ).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "1",
+});
+
+test("overview slider changes selection without double-handling arrow keys", async ({
+  page,
+}) => {
+  const slider = page.getByRole("slider", { name: "Move to a window" });
+  await slider.focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(slider).toHaveValue("2");
+  await expect(selected(page)).toHaveAttribute("data-id", "3");
+  await expect(slider).toHaveAttribute(
+    "aria-valuetext",
+    "Browser, window 3 of 4",
   );
 });
 
-test("demo cap is communicated and does not trap keyboard focus", async ({
+test("width changes only the selected block and stop restores original widths and positions", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const before = await widths(page);
+  await page.getByRole("button", { name: "Change width", exact: true }).click();
+  const after = await widths(page);
+  expect(after[1].width).toBe(440);
+  expect(after.filter((w) => w.id !== "2")).toEqual(
+    before.filter((w) => w.id !== "2"),
+  );
+  await expect(page.getByRole("status")).toContainText(
+    "All other window widths are unchanged",
+  );
+  await page
+    .getByRole("button", { name: "Stop & restore", exact: true })
+    .click();
+  await expect(page.locator("#demo")).toHaveAttribute("data-mode", "restored");
+  await expect(
+    page.getByText("Original layout restored", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Add window", exact: true }),
+  ).toBeDisabled();
+  await expect(selected(page).locator(".tile-width")).toHaveText("330 px");
+  const tops = await page
+    .locator(".map-tile")
+    .evaluateAll((els) => els.map((el) => el.getBoundingClientRect().top));
+  expect(new Set(tops).size).toBeGreaterThan(1);
+  await page.getByRole("button", { name: "Start row", exact: true }).click();
+  await expect(page.locator("#demo")).toHaveAttribute("data-mode", "row");
+  const rowTops = await page
+    .locator(".map-tile")
+    .evaluateAll((els) => els.map((el) => el.getBoundingClientRect().top));
+  expect(new Set(rowTops).size).toBe(1);
+  expect((await widths(page))[1].width).toBe(330);
+});
+
+test("demo limit is clear, and reset returns to a useful starting point", async ({
   page,
 }) => {
   const add = page.getByRole("button", { name: "Add window", exact: true });
   for (let i = 0; i < 8; i++) await add.click();
-  await expect(page.locator(".app-window")).toHaveCount(12);
+  await expect(page.locator(".map-tile")).toHaveCount(12);
   await expect(add).toBeDisabled();
   await expect(page.getByRole("status")).toContainText("Demo limit reached");
-  await page
-    .getByRole("region", {
-      name: "Scrolling window demonstration",
-      exact: true,
-    })
-    .focus();
-  await page.keyboard.press("End");
-  await expect(page.locator(".app-window").last()).toHaveAttribute(
-    "data-selected",
-    "true",
-  );
+  await page.getByRole("button", { name: "Reset demo", exact: true }).click();
+  await expect(page.locator(".map-tile")).toHaveCount(4);
+  await expect(selected(page)).toHaveAttribute("data-id", "2");
+  await expect(add).toBeEnabled();
 });
 
-test("release links, metadata and visible installation details", async ({
+test("real release, metadata, links and required preview details", async ({
   page,
 }) => {
   const links = page.locator("a[download]");
@@ -145,9 +151,9 @@ test("release links, metadata and visible installation details", async ({
     "content",
     /free, open-source/,
   );
-  await expect(
-    page.getByText("This preview is not notarized by Apple.", { exact: false }),
-  ).toBeVisible();
+  await expect(page.locator("#preview-note")).toContainText(
+    "This preview is not notarized by Apple.",
+  );
   await expect(
     page.getByRole("link", { name: "Apple’s Open Anyway instructions" }),
   ).toHaveAttribute("href", "https://support.apple.com/102445");
@@ -161,63 +167,64 @@ test("release links, metadata and visible installation details", async ({
   const ids = await page
     .locator('a[href^="#"]')
     .evaluateAll((els) =>
-      els.map((el) => el.getAttribute("href").slice(1)).filter(Boolean),
+      els.map((a) => a.getAttribute("href").slice(1)).filter(Boolean),
     );
   for (const id of ids)
     await expect(page.locator(`[id="${id}"]`)).toHaveCount(1);
 });
 
 for (const width of [320, 390, 768, 1024, 1440]) {
-  test(`responsive layout and accessibility at ${width}px`, async ({
+  test(`responsive layout and WCAG accessibility at ${width}px`, async ({
     page,
   }) => {
-    await page.setViewportSize({ width, height: 900 });
+    await page.setViewportSize({ width, height: 1000 });
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    const results = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-      .analyze();
-    expect(
-      results.violations.map((v) => ({
-        id: v.id,
-        nodes: v.nodes.map((n) => ({
-          target: n.target,
-          summary: n.failureSummary,
+    for (const restore of [false, true]) {
+      if (restore)
+        await page
+          .getByRole("button", { name: "Stop & restore", exact: true })
+          .click();
+      const result = await new AxeBuilder({ page })
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+        .analyze();
+      expect(
+        result.violations.map((v) => ({
+          id: v.id,
+          nodes: v.nodes.map((n) => ({
+            target: n.target,
+            summary: n.failureSummary,
+          })),
         })),
-      })),
-    ).toEqual([]);
+      ).toEqual([]);
+    }
   });
 }
 
-test("reduced motion applies immediately to interactive scrolling", async ({
+test("reduced motion is immediate for navigation and changing layouts", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.locator("#window-viewport")).toHaveCSS(
+  await expect(page.locator("#map-viewport")).toHaveCSS(
     "scroll-behavior",
     "auto",
   );
-  await page
-    .getByRole("region", {
-      name: "Scrolling window demonstration",
-      exact: true,
-    })
-    .focus();
+  await region(page).focus();
   await page.keyboard.press("End");
-  const offset = await page
-    .locator("#window-viewport")
-    .evaluate((el) => el.scrollLeft);
-  expect(offset).toBeGreaterThan(0);
-  await expect(page.locator(".button-primary").first()).toHaveCSS(
-    "transition-duration",
-    "0s",
-  );
+  expect(
+    await page.locator("#map-viewport").evaluate((v) => v.scrollLeft),
+  ).toBeGreaterThan(0);
+  await expect(selected(page)).toHaveCSS("transition-duration", "0s");
+  await page
+    .getByRole("button", { name: "Stop & restore", exact: true })
+    .click();
+  await expect(selected(page)).toHaveCSS("transition-duration", "0s");
 });
 
-test("touch swipe moves to the next window without a vertical gesture selecting it", async ({
+test("horizontal touch gestures select a block, vertical gestures keep their selection", async ({
   browser,
 }) => {
   const context = await browser.newContext({
@@ -227,31 +234,39 @@ test("touch swipe moves to the next window without a vertical gesture selecting 
   });
   const page = await context.newPage();
   await page.goto("http://127.0.0.1:4173");
-  const viewport = page.locator("#window-viewport");
+  const viewport = page.locator("#map-viewport");
   await viewport.dispatchEvent("touchstart", {
     touches: [{ identifier: 1, clientX: 280, clientY: 700 }],
   });
   await viewport.dispatchEvent("touchend", {
     changedTouches: [{ identifier: 1, clientX: 100, clientY: 705 }],
   });
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "3",
-  );
+  await expect(selected(page)).toHaveAttribute("data-id", "3");
   await viewport.dispatchEvent("touchstart", {
     touches: [{ identifier: 1, clientX: 200, clientY: 700 }],
   });
   await viewport.dispatchEvent("touchend", {
     changedTouches: [{ identifier: 1, clientX: 190, clientY: 550 }],
   });
-  await expect(page.locator('[data-selected="true"]')).toHaveAttribute(
-    "data-id",
-    "3",
-  );
+  await expect(selected(page)).toHaveAttribute("data-id", "3");
   await context.close();
 });
 
-test("page content and real download remain accessible without JavaScript", async ({
+test("native horizontal wheel scrolling moves the workspace continuously", async ({
+  page,
+}) => {
+  const viewport = page.locator("#map-viewport");
+  await viewport.scrollIntoViewIfNeeded();
+  const rect = await viewport.boundingBox();
+  const before = await viewport.evaluate((v) => v.scrollLeft);
+  await page.mouse.move(rect.x + rect.width / 2, rect.y + rect.height / 2);
+  await page.mouse.wheel(150, 0);
+  await expect
+    .poll(() => viewport.evaluate((v) => v.scrollLeft))
+    .toBeGreaterThan(before + 30);
+});
+
+test("product information works with JavaScript disabled", async ({
   browser,
 }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });

@@ -1,24 +1,24 @@
-# TileMe: the moving desktop
+# TileMe / Desktop map
 
-## Revised direction
+This is a complete replacement of the two earlier designs. The current request takes priority over the original warm neumorphic direction: use a cool, graphic identity and a new interactive explanation, while preserving the actual product facts and release.
 
-The first centered, app-store-like layout did not feel sufficiently distinct to the owner. The new direction takes the form of a small, practical desktop manual: an asymmetric opening, an interactive workspace alongside the headline, a simple three-step workflow strip, an open feature ledger, a charcoal shortcut reference, and installation presented as a sequence.
+Palette: pale blue-white #EEF1F8, navy #202B43, cobalt #3158CD, lavender #DCD8F0, mint #DAE8DC, white #FFFFFF. Strong ink and readable labels; no fake macOS chrome, sage desktop, orange logo, dark shortcut band, cozy marketing copy or repeated feature cards.
 
-Palette: warm paper #F5F3ED, ink #30362F, secondary #62685E, rust #AA4A28, quiet sage #E4E8DB, rule #D7D9CF. Restrained shadows belong to buttons, keycaps and the demonstration, not every content block.
+Type: self-hosted Sora, a geometric sans. Large open headings, compact but readable body copy, tabular numbers only for window widths and installation sequence.
 
-Type: Avenir Next / Avenir / Segoe UI for a relaxed, readable humanist voice. Headings use medium weights and natural line breaks; utility labels use the same family. No pill announcement, centered hero, orange app-icon square, repeated three-column feature cards, or centered closing pitch.
+The memorable element is a desktop map: labeled, solid geometric window footprints pass through a fixed display marker. A small overview shows the whole row and the current selection. A new block joins directly after the selected block; a width button changes only that block. Stop & restore unfolds the blocks into their original scattered footprints, and Start row arranges them again. This is a conceptual demonstration, clearly labeled and explained, rather than a miniature imitation of other apps.
 
-Layout:
+Composition:
 
-    outlined row mark + TileMe        demo / shortcuts / install / source
-    headline (left)             interactive workspace (right)
-    description + download      selected window / row controls
-    open ---------------- move ---------------- restore
-    feature introduction        open two-column feature ledger
-    charcoal keyboard reference / tactile keys
-    five installation steps across the page
-    inset full-width preview notice
-    practical details in an open two-column list
-    closing download (left aligned) / footer
+    text wordmark                   about / setup / source
+    large headline                        download block
+    plain description                     release details
+    interactive desktop map across the full width
+    overview + navigation / add / width / stop / reset
+    concise behavior ledger (actual features)
+    installation instructions     open keyboard reference
+    preview warning in the installation sequence
+    practical details disclosure, open by default
+    large TileMe wordmark / source, release, MIT links
 
-On mobile the hero stacks above the demo; features and practical details use single-column readable lists, installation becomes a vertical numbered sequence, and controls keep 44px targets. The original content requirements, real download URL, scoped keyboard handling and reduced-motion support are retained.
+Mobile: single-column layout with controls in an intentional wrapping toolbar. Window blocks preserve their widths within a horizontally scrollable viewport. Restored positions use a scaled desktop coordinate plane. All actions have text labels and 44px minimum targets. Keyboard handling remains scoped to the map; reduced motion disables scrolling animation and transform transitions.
