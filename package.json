@@ -1,0 +1,16 @@
+{
+  "name": "tileme-website",
+  "version": "1.0.0",
+  "description": "Public website for the TileMe macOS scrolling window manager",
+  "scripts": {
+    "dev": "python3 -m http.server 4173 --bind 127.0.0.1",
+    "build": "node scripts/build.mjs",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1"
+  },
+  "private": true,
+  "type": "module"
+}
