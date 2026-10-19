@@ -13,14 +13,12 @@ const selected = (page) => page.locator('.map-tile[aria-pressed="true"]');
 const region = (page) =>
   page.getByRole("region", { name: "Interactive desktop map", exact: true });
 const widths = (page) =>
-  page
-    .locator(".map-tile")
-    .evaluateAll((els) =>
-      els.map((el) => ({
-        id: el.dataset.id,
-        width: el.getBoundingClientRect().width,
-      })),
-    );
+  page.locator(".map-tile").evaluateAll((els) =>
+    els.map((el) => ({
+      id: el.dataset.id,
+      width: el.getBoundingClientRect().width,
+    })),
+  );
 
 test("new block joins after selection without squeezing other blocks", async ({
   page,
@@ -144,9 +142,7 @@ test("real release, metadata, links and required preview details", async ({
   await expect(links).toHaveCount(3);
   for (const a of await links.all())
     await expect(a).toHaveAttribute("href", download);
-  await expect(page).toHaveTitle(
-    "TileMe — Your windows, in one scrolling row.",
-  );
+  await expect(page).toHaveTitle("Along — Your windows, in one scrolling row.");
   await expect(page.locator('meta[name="description"]')).toHaveAttribute(
     "content",
     /free, open-source/,

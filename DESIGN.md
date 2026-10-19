@@ -1,4 +1,4 @@
-# TileMe / Desktop map
+# Along / Desktop map
 
 This is a complete replacement of the two earlier designs. The current request takes priority over the original warm neumorphic direction: use a cool, graphic identity and a new interactive explanation, while preserving the actual product facts and release.
 
@@ -19,6 +19,6 @@ Composition:
     installation instructions     open keyboard reference
     preview warning in the installation sequence
     practical details disclosure, open by default
-    large TileMe wordmark / source, release, MIT links
+    large Along wordmark / source, release, MIT links
 
 Mobile: single-column layout with controls in an intentional wrapping toolbar. Window blocks preserve their widths within a horizontally scrollable viewport. Restored positions use a scaled desktop coordinate plane. All actions have text labels and 44px minimum targets. Keyboard handling remains scoped to the map; reduced motion disables scrolling animation and transform transitions.

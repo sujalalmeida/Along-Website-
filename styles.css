@@ -1655,3 +1655,15 @@ details:not([open]) .expand-sign::after {
     animation: none !important;
   }
 }
+
+.release-name-note {
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin: -8px 0 27px;
+  max-width: 460px;
+}
+.release-name-note strong {
+  font-weight: 500;
+  color: var(--ink);
+}

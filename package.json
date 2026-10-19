@@ -1,7 +1,7 @@
 {
-  "name": "tileme-website",
+  "name": "along-website",
   "version": "1.0.0",
-  "description": "Public website for the TileMe macOS scrolling window manager",
+  "description": "Public website for the Along macOS scrolling window manager",
   "scripts": {
     "dev": "python3 -m http.server 4173 --bind 127.0.0.1",
     "build": "node scripts/build.mjs",

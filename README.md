@@ -1,6 +1,6 @@
-# TileMe website
+# Along website
 
-Public website for TileMe, an independent, free and open-source macOS scrolling window manager. Website files only; no native application code.
+Public website for Along, an independent, free and open-source macOS scrolling window manager. Website files only; no native application code.
 
 ## Preview
 
@@ -32,6 +32,10 @@ Fifteen tests cover insertion order, unchanged neighboring widths, individual wi
 
 The demonstration uses conceptual, labeled window footprints instead of simulated apps. A fixed display marker shows the visible desktop, and a full-row overview and slider let visitors navigate. Blocks retain their widths when a new one is inserted after the current selection. Change width affects only that block. Stop & restore shows original scattered positions and original widths; Start row begins a new row with those restored widths. Reset returns to the initial four blocks. A twelve-window limit keeps the model lightweight.
 
-The model runs only in the browser, has no access to system windows, and never installs or starts TileMe. Its keyboard handling is scoped to its region and leaves modified OS shortcuts alone. With JavaScript disabled, all product, download, installation and preview information remains accessible.
+The model runs only in the browser, has no access to system windows, and never installs or starts Along. Its keyboard handling is scoped to its region and leaves modified OS shortcuts alone. With JavaScript disabled, all product, download, installation and preview information remains accessible.
 
 All download links use the real v0.6.0 Apple Silicon DMG on GitHub. Update release links, metadata and compatibility copy together for future releases. The publication includes first-launch instructions, Apple’s Open Anyway documentation, and current limitations.
+
+## Naming and existing release
+
+The website and project branding use Along. The GitHub source repository remains `sujalalmeida/TileMac`, and the real v0.6.0 DMG is still named `TileMe-0.6.0-apple-silicon.dmg`. Keep those working release URLs intact until a new release exists. The installation note identifies the legacy app name in Applications and Accessibility. This website rename does not modify the native macOS application.
