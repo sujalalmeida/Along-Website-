@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 const download =
-  "https://github.com/sujalalmeida/Along/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg";
+  "https://github.com/sujalalmeida/Along/releases/download/v0.7.0/Along-0.7.0-apple-silicon.dmg";
 test.beforeEach(async ({ page }) => {
   page.on("pageerror", (error) => {
     throw error;

@@ -62,8 +62,10 @@ The demonstration uses conceptual, labeled window footprints instead of simulate
 
 The model runs only in the browser, has no access to system windows, and never installs or starts Along. Its keyboard handling is scoped to its region and leaves modified OS shortcuts alone. With JavaScript disabled, all product, download, installation and preview information remains accessible.
 
-All download links use the real v0.6.0 Apple Silicon DMG on GitHub. Update release links, metadata and compatibility copy together for future releases. The publication includes first-launch instructions, Apple’s Open Anyway documentation, and current limitations.
+All download links use the real v0.7.0 Apple Silicon DMG on GitHub. Update release links, metadata and compatibility copy together for future releases. The publication includes first-launch instructions, Apple’s Open Anyway documentation, and current limitations.
 
-## Naming and existing release
+## Current release
 
-The website and project branding use Along. The GitHub source repository is `sujalalmeida/Along`, and the real v0.6.0 DMG is still named `TileMe-0.6.0-apple-silicon.dmg`. Keep those working release URLs intact until a new release exists. The installation note identifies the legacy app name in Applications and Accessibility. This website rename does not modify the native macOS application.
+The source repository is `sujalalmeida/Along`. The website links to the published v0.7.0 preview and `Along-0.7.0-apple-silicon.dmg`. The app, installer and download filenames all use Along. Installation notes explain quitting an existing copy before upgrading and renewing Accessibility permission when needed.
+
+This website update does not modify the native macOS application. Keep the Apple Silicon, macOS 13+, preview and notarization details visible when updating release links.
