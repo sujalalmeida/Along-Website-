@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 const download =
-  "https://github.com/sujalalmeida/TileMac/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg";
+  "https://github.com/sujalalmeida/Along/releases/download/v0.6.0/TileMe-0.6.0-apple-silicon.dmg";
 test.beforeEach(async ({ page }) => {
   page.on("pageerror", (error) => {
     throw error;
@@ -158,7 +158,7 @@ test("real release, metadata, links and required preview details", async ({
   ).toBeVisible();
   await expect(page.getByRole("link", { name: "MIT license" })).toHaveAttribute(
     "href",
-    "https://github.com/sujalalmeida/TileMac/blob/master/LICENSE",
+    "https://github.com/sujalalmeida/Along/blob/master/LICENSE",
   );
   const ids = await page
     .locator('a[href^="#"]')

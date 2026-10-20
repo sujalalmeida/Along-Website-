@@ -25,11 +25,11 @@ The repository includes `wrangler.jsonc` with `assets.directory` set to `./dist`
 
 For Cloudflare Workers Builds connected to GitHub, use:
 
-| Setting | Value |
-| --- | --- |
-| Root directory | Repository root (leave blank) |
-| Build command | Leave blank; the deploy script builds the site |
-| Deploy command | `npm run deploy` |
+| Setting        | Value                                          |
+| -------------- | ---------------------------------------------- |
+| Root directory | Repository root (leave blank)                  |
+| Build command  | Leave blank; the deploy script builds the site |
+| Deploy command | `npm run deploy`                               |
 
 The deploy script runs the static build before Wrangler. A custom build command in the Wrangler configuration also ensures direct `npx wrangler deploy` builds the site. If the dashboard already has `npm run build` as its build command, that is safe; it simply rebuilds before deployment.
 
@@ -66,4 +66,4 @@ All download links use the real v0.6.0 Apple Silicon DMG on GitHub. Update relea
 
 ## Naming and existing release
 
-The website and project branding use Along. The GitHub source repository remains `sujalalmeida/TileMac`, and the real v0.6.0 DMG is still named `TileMe-0.6.0-apple-silicon.dmg`. Keep those working release URLs intact until a new release exists. The installation note identifies the legacy app name in Applications and Accessibility. This website rename does not modify the native macOS application.
+The website and project branding use Along. The GitHub source repository is `sujalalmeida/Along`, and the real v0.6.0 DMG is still named `TileMe-0.6.0-apple-silicon.dmg`. Keep those working release URLs intact until a new release exists. The installation note identifies the legacy app name in Applications and Accessibility. This website rename does not modify the native macOS application.
