@@ -5,3 +5,11 @@ playwright-report/
 .openai/workflow/
 .artifacts/
 .DS_Store
+
+# Local Cloudflare state and secrets
+.wrangler/
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+!.env.example

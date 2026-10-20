@@ -19,6 +19,34 @@ npm run build
 
 Deploy `dist/` to a static host. Production has no runtime dependencies or external font requests. `.openai/hosting.json` records the existing Sites deployment. Sora is self-hosted under its included SIL Open Font License.
 
+## Cloudflare Workers deployment
+
+The repository includes `wrangler.jsonc` with `assets.directory` set to `./dist`. Only built website files are published. Never set the assets directory to `.`: Cloudflare installs dependencies before deploying, so the repository root contains `node_modules` even when Git correctly ignores it.
+
+For Cloudflare Workers Builds connected to GitHub, use:
+
+| Setting | Value |
+| --- | --- |
+| Root directory | Repository root (leave blank) |
+| Build command | Leave blank; the deploy script builds the site |
+| Deploy command | `npm run deploy` |
+
+The deploy script runs the static build before Wrangler. A custom build command in the Wrangler configuration also ensures direct `npx wrangler deploy` builds the site. If the dashboard already has `npm run build` as its build command, that is safe; it simply rebuilds before deployment.
+
+To preview locally using Cloudflare’s static asset server:
+
+```sh
+npm run preview
+```
+
+To validate deployment packaging without publishing or logging in:
+
+```sh
+npm run deploy -- --dry-run
+```
+
+For Cloudflare **Pages**, use framework **None**, build command `npm run build`, and output directory `dist`. Pages does not use the Workers deploy command.
+
 ## Browser checks
 
 ```sh
